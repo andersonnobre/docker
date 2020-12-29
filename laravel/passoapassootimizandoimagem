@@ -1,0 +1,41 @@
+--Criar um dofile.prod diferente
+--Criar estagio para o processo de build na imagem
+--Criar um segundo estagio com php e lixus alpine, mais enxuto limpo mais seguro.
+
+FROM php:7.4-fpm-alpine
+
+--apontar o diretorio padrão que iremos trabalhar 
+WORKDIR var/www
+
+--remover a pasta html
+RUN rm -rf var/www/html
+
+
+---renomear o build ANTERIOR 
+FROM php:7.4-cli AS Builder
+
+--Copiar todo conteudo do build anterior pra atual
+COPY --from=Builder /var/www/laravel
+
+--Copiar todo conteudo de COPY --from=Builder /var/www/laravel para var/www
+
+FROM php:7.4-fpm-alpine
+WORKDIR var/www
+RUN rm -rf var/www/html
+COPY --from=Builder /var/www/laravel .
+
+-- Trocar os donos do diretorio concedendo permissão a pasta var/www
+RUN chown -R www-data:www-data /var/www
+
+---EXPOR A PORTA 9000
+EXPOSE 9000
+
+
+--Copiar o PHP para ficar rodando
+CMD ["php-fpm"]
+
+--Criar a imagem la
+nobre@DESKTOP-GDNBSBM:~/docker/laravel$ docker build -t nobre/lavarel:prod . -f Dockerfile.prod
+
+--Gerou a tag da imagem
+Successfully tagged nobre/lavarel:prod
