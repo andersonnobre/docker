@@ -1,4 +1,4 @@
-FROM golang:1.14 AS StageOne 
+FROM golang:alpine AS StageOne 
 
 WORKDIR /usr/src/myapp
 COPY ./hello.go .
