@@ -1,0 +1,18 @@
+docker run -it -d --name appgo -v /home/nobre/docker/golang:/usr/src/myapp  -w /usr/src/myapp golang:1.14
+
+docker exec -it  appgo bash
+
+criar o arquivo hello.go
+
+go version
+
+go run hello.go
+
+
+criar o Dockerfile
+
+appgolang
+
+docker build -t nobre/codeeducation . 
+
+docker run --rm -it nobre/codeeducation
