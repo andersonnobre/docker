@@ -16,3 +16,4 @@ appgolang
 docker build -t nobre/codeeducation . 
 
 docker run --rm -it nobre/codeeducation
+StageOne
